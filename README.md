@@ -1,1 +1,1 @@
-# blog-samples
+Примеры кода со страниц блога [blog.biscripter.ru](https://blog.biscripter.ru)

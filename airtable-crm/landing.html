@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Кошельки оптом</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.125rem;
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(to left, hsl(193, 43%, 45%) 0%, hsl(232, 45%, 64%) 100%);
+      min-height: 100vh;
+      color: whitesmoke;
+    }
+
+    form {
+      margin: 0 auto;
+    }
+
+    fieldset {
+      border: 1px solid whitesmoke;
+      border-radius: 2px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    legend {
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    input {
+      border: none;
+      border-radius: inherit;
+      margin: .5rem auto;
+      padding: .5rem 1.3rem;
+      display: block;
+    }
+
+    input[type='submit'] {
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all .15s ease-in;
+    }
+
+    input[type='submit']:hover {
+      box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+      transform: translateY(-1px);
+    }
+
+    #status {
+      font-size: .85rem;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <form>
+    <fieldset>
+      <legend>Лучшие кошельки оптом</legend>
+      <input name="name" placeholder="Имя">
+      <input name="phone" type="phone" placeholder="Телефон" required>
+      <input id="submit" type="submit" value="Заказать">
+    </fieldset>
+  </form>
+  <p id="status">&nbsp</p>
+</main>
+
+<script>
+  let formEl = document.getElementsByTagName('form')[0];
+  let statusEl = document.getElementById('status');
+  let buttonEl = document.getElementById('submit');
+  let waitString = 'Подождите, заявка отправляется...';
+  let okString = 'Спасибо, Ваша заявка принята. Я свяжусь с Вами в течение 15 минут';
+  let errorString = 'Ошибка отправки заявки, уже работаю над этим. Пожалуйста, позвоните мне по телефону вверху страницы';
+  formEl.addEventListener('submit', (e) => {
+    e.preventDefault();
+    statusEl.innerHTML = waitString;
+    buttonEl.disabled = true;
+    let formData = {};
+    for (let i = 0; i < formEl.length; ++i) {
+      if (formEl[i].name) {
+        formData[formEl[i].name] = formEl[i].value;
+      }
+    }
+    fetch(
+        '/backend.php',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: JSON.stringify(formData)
+        }
+    )
+        .then((response) => {
+          if (response.ok) {
+            statusEl.innerHTML = okString;
+            formEl.reset();
+          } else {
+            statusEl.innerHTML = errorString;
+          }
+          buttonEl.disabled = false;
+        })
+        .catch(() => {
+          statusEl.innerHTML = errorString;
+          buttonEl.disabled = false;
+        });
+  });
+</script>
+
+</body>
+</html>
