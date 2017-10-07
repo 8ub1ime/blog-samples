@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Плашка с информацией о количестве посетителей</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+      font-size: 1.125rem;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: whitesmoke;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .screen {
+      box-sizing: border-box;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen--teal {
+      background: rgba(57, 204, 204, 1);
+      background: -webkit-linear-gradient(top, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+      background: linear-gradient(to bottom, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+    }
+
+    .screen--blue {
+      background: rgba(0, 116, 217, 1);
+      background: -webkit-linear-gradient(top, rgba(0, 116, 217, 1) 0%, rgba(0, 65, 122, 1) 100%);
+      background: linear-gradient(to bottom, rgba(0, 116, 217, 1) 0%, rgba(0, 65, 122, 1) 100%);
+    }
+
+    .screen__description {
+      max-width: 60rem;
+      margin-bottom: 2rem;
+    }
+
+    .panel {
+      font-size: .85rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background-color: whitesmoke;
+      -webkit-box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+      box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+      color: rgba(0, 0, 0, .7);
+      padding: .5rem 0;
+      text-shadow: none;
+    }
+
+    .panel--top {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="screen screen--teal">
+    <p class="screen__description">
+      Плашка наверху показывает количество посетителей и покупок ^
+    </p>
+  </div>
+  <div class="screen screen--blue"></div>
+  <div class="panel panel--top">
+    <span>Посетителей сегодня: <b class="js-visitors-today"></b></span>
+    <span>Сейчас на сайте: <b class="js-visitors-now"></b></span>
+    <span>Покупок сегодня: <b class="js-purchases-today"></b></span>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var now = new Date();
+    var day = now.getDate();
+    var visitorsPerMinute = ((day % 4) + 6) / 5; // 1.2, 1.4, 1.6, 1.8, 1.2, 1.4 и т.д.
+    var conversionRate = ((day % 3) + 5) / 100; // 5, 6, 7, 5, 6 и т.д.
+    var minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+    var visitorsToday = Math.floor(minutesSinceMidnight * visitorsPerMinute);
+    var purchasesToday = Math.floor(visitorsToday * conversionRate);
+    var delta = visitorsToday - Math.floor((minutesSinceMidnight - 1) * visitorsPerMinute);
+    var visitorsNow = Math.floor(visitorsPerMinute * 5) + (now.getMinutes() % (delta + 1));
+    var panel = document.querySelector('.panel');
+    panel.querySelector('.js-visitors-today').innerHTML = visitorsToday;
+    panel.querySelector('.js-purchases-today').innerHTML = purchasesToday;
+    panel.querySelector('.js-visitors-now').innerHTML = visitorsNow;
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exit Intent Popup</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+      font-size: 1.125rem;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: whitesmoke;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .screen {
+      box-sizing: border-box;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen--teal {
+      background: rgba(57, 204, 204, 1);
+      background: -webkit-linear-gradient(top, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+      background: linear-gradient(to bottom, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+    }
+
+    .screen__description {
+      max-width: 60rem;
+      margin-bottom: 2rem;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, .5);
+      z-index: 9999;
+    }
+
+    .modal {
+      background-color: whitesmoke;
+      margin: auto;
+      padding: 2rem 3rem;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      width: 100%;
+      height: 100%;
+      max-height: 20rem;
+      max-width: 40rem;
+      -webkit-box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, .2);
+      box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, .2);
+      opacity: 0;
+      transition: opacity .3s ease-in;
+      text-align: center;
+      color: rgba(0, 0, 0, .8);
+    }
+
+    .modal__close {
+      float: right;
+      text-align: right;
+      margin: -1.2rem -2rem 0 .6rem;
+      font-size: .75rem;
+      cursor: pointer;
+      transition: color .15s ease-in;
+    }
+
+    .modal__close:hover {
+      color: black;
+    }
+
+    .modal__header {
+      font-size: 1.25rem;
+    }
+
+    @media screen and (min-width: 480px) {
+      .modal__header {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="screen screen--teal">
+    <p class="screen__description">
+      При перемещении курсора за пределы страницы выскочит попап
+    </p>
+  </div>
+  <div class="overlay">
+    <div class="modal">
+      <span class="modal__close" title="Закрыть">✖</span>
+      <h1 class="modal__header">
+        Подождите! Посмотрите на мой замечательный попап с суперполезным текстом!
+      </h1>
+    </div>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var overlay = document.querySelector('.overlay');
+    var modal = document.querySelector('.modal');
+    document.addEventListener('mouseleave', showModal, false);
+
+    function showModal() {
+      document.body.style.overflow = 'hidden';
+      overlay.style.display = 'flex';
+      window.setTimeout(function () {
+        modal.style.opacity = 1;
+      }, 50);
+      document.removeEventListener('mouseleave', showModal);
+    }
+
+    modal.querySelector('.modal__close').addEventListener('click', function (e) {
+      e.preventDefault();
+      modal.style.opacity = 0;
+      overlay.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }, false);
+  })();
+</script>
+
+</body>
+</html>

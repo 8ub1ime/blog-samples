@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Подмена страницы после клика по ссылке</title>
+  <style>
+    html {
+      scroll-behavior: smooth;
+      font-size: 1.125rem;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: whitesmoke;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .screen {
+      box-sizing: border-box;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen--teal {
+      background: rgba(57, 204, 204, 1);
+      background: -webkit-linear-gradient(top, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+      background: linear-gradient(to bottom, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+    }
+
+    .screen__description {
+      max-width: 60rem;
+      margin-bottom: 2rem;
+    }
+
+    .link {
+      color: whitesmoke;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<main>
+  <div class="screen screen--teal">
+    <p class="screen__description">
+      При нажатии на ссылку, она откроется в новой вкладке, а текущая будет заменена на google.com<br/>
+      <a href="http://ya.ru" class="link">Ссылка ></a>
+    </p>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var links = document.querySelectorAll('.link');
+    for (var i = 0; i < links.length; i++) {
+      links[i].setAttribute('target', '_blank');
+      links[i].addEventListener('click', function () {
+        window.location.href = 'http://google.com';
+      }, false);
+    }
+  })();
+</script>
+
+</body>
+</html>

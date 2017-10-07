@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Промокоды</title>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+      font-size: 1.125rem;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+      color: whitesmoke;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .screen {
+      box-sizing: border-box;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screen--teal {
+      background: rgba(57, 204, 204, 1);
+      background: -webkit-linear-gradient(top, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+      background: linear-gradient(to bottom, rgba(57, 204, 204, 1) 0%, rgba(34, 122, 122, 1) 100%);
+    }
+
+    .screen__description {
+      max-width: 60rem;
+      margin-bottom: 2rem;
+    }
+
+    .form__input {
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      border: none;
+      padding: .5rem 1.3rem;
+      box-sizing: initial;
+      margin: .5rem 0;
+      width: auto;
+    }
+
+    .form__submit {
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px;
+      border-radius: 2px;
+      border: none;
+      padding: .5rem 1.3rem;
+      margin: .5rem 0;
+      transition: box-shadow .15s ease-in;
+      cursor: pointer;
+    }
+
+    .form__submit:hover {
+      -webkit-box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, .2);
+      box-shadow: 2px 2px 6px 1px rgba(0, 0, 0, .2);
+    }
+
+    .form__status {
+      display: block;
+      opacity: 0;
+      margin: 1rem;
+      font-size: .85rem;
+      text-shadow: none;
+      transition: opacity .15s ease-in;
+    }
+
+    .form__status--error {
+      color: red;
+    }
+
+    .promocode {
+      text-align: center;
+    }
+
+    .promocode__trigger {
+      display: inline-block;
+      color: whitesmoke;
+    }
+
+    .promocode__form {
+      display: block;
+      opacity: 0;
+      margin: 1rem;
+      transition: opacity .15s ease-in;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<main>
+  <div class="screen screen--teal">
+    <p class="screen__description">
+      Попробуйте ввести "biscripter"<br/>
+      <span class="js-price">4000</span> руб.
+    </p>
+    <div class="promocode">
+      <a class="promocode__trigger" href="#">У меня есть промокод</a>
+      <form class="promocode__form">
+        <input class="form__input" placeholder="Введите промокод" required>
+        <input class="form__submit" type="submit" value="Применить">
+        <span class="form__status form__status--error">Промокод не подходит</span>
+      </form>
+    </div>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var price = 4000;
+    var discount = 2010;
+    var promocode = 'biscripter';
+    var priceEl = document.querySelector('.js-price');
+    priceEl.innerHTML = price;
+    var formVisible = false;
+    var promocodeEl = document.querySelector('.promocode');
+    promocodeEl.querySelector('.promocode__trigger').addEventListener('click', function (e) {
+      e.preventDefault();
+      if (formVisible) {
+        promocodeEl.querySelector('.promocode__form').style.opacity = 0;
+        formVisible = false;
+      } else {
+        promocodeEl.querySelector('.promocode__form').style.opacity = 1;
+        formVisible = true;
+      }
+    }, false);
+    var form = promocodeEl.querySelector('.promocode__form');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var errorElement = promocodeEl.querySelector('.form__status--error');
+      if (promocodeEl.querySelector('.form__input').value === promocode) {
+        var lowPrice = price;
+        var counter = 0;
+        var interval = window.setInterval(function () {
+          if (counter < 10) {
+            lowPrice -= discount / 10;
+            priceEl.innerHTML = lowPrice;
+            counter++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 100);
+        form.reset();
+        errorElement.style.opacity = 0;
+      } else {
+        errorElement.style.opacity = 1;
+        priceEl.innerHTML = price;
+      }
+    }, false);
+  })();
+</script>
+
+</body>
+</html>
