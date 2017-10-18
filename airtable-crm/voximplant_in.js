@@ -14,13 +14,13 @@ VoxEngine.addEventListener(AppEvents.CallAlerting, (e1) => {
       postData: JSON.stringify({phone: e1.callerid, callRecordURL: e2.url}),
       timeout: 20
     })
-      .then((response) => {
-        if (response.code !== 200) {
-          Logger.write('Call data sending failed: ' + response.code);
-        } else {
-          Logger.write('Call data sent to backend');
-        }
-      })
+        .then((response) => {
+          if (response.code !== 200) {
+            Logger.write('Call data sending failed: ' + response.code);
+          } else {
+            Logger.write('Call data sent to backend');
+          }
+        })
   });
 
   VoxEngine.easyProcess(inc, out, (call) => {

@@ -5,7 +5,7 @@ const NOTIFICATIONS_EMAIL = 'admin@example.com';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     if ($input['phone'] == '') {
-        header("HTTP/1.0 404 Bad request");
+        header("HTTP/1.0 400 Bad request");
         return;
     }
     if ($input['mobile']) return; // Не обрабатываем ботовые заявки

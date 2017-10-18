@@ -50,7 +50,7 @@ function createAirtableItem(string $tableName, array $data): array
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     if ($input['phone'] == '') {
-        header("HTTP/1.0 404 Bad request");
+        header("HTTP/1.0 400 Bad request");
         return;
     }
     $referer = $_SERVER['HTTP_REFERER'];
