@@ -61,7 +61,7 @@
     }
 
     var now = new Date();
-    var dateString = pad(now.getDate(), 2) + '.' + pad(now.getMonth() + '.' + now.getFullYear());
+    var dateString = pad(now.getDate(), 2) + '.' + pad(now.getMonth() + 1, 2) + '.' + now.getFullYear();
     var elements = document.querySelectorAll('.js-date');
     for (var i = 0; i < elements.length; i++) {
       elements[i].innerHTML = dateString;
