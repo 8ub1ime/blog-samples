@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" lang="ru">
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <link rel='shortcut icon' href='https://freelandings.ru/assets/favicons/favicon.ico'>
+</head>
+<style>
+  body {
+    margin: 0;
+    background: #fc00ff;
+    background: -webkit-linear-gradient(to right, #00dbde, #fc00ff);
+    background: linear-gradient(to right, #00dbde, #fc00ff);
+    height: 100vh;
+    padding: 2rem;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  form {
+    margin: auto;
+  }
+
+  input[type="submit"] {
+    font-size: 1.125rem;
+    padding: 1rem 1.5rem;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color: white;
+    background-color: #43cea2;
+    border: none;
+    -webkit-box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 8px 2px rgba(0, 0, 0, .2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+    -webkit-transition: all .15s ease-in;
+    transition: all .15s ease-in;
+  }
+
+  input[type="submit"]:hover {
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 12px 2px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 0 12px 2px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, .3);
+  }
+</style>
+<body>
+<h1>Батарейки со скидкой 90%!</h1>
+<form action="mail.php" method="post">
+  <input type="hidden" name="Товар" value="Батарейки пальчиковые - 6 шт.">
+  <input type="hidden" name="leadId">
+  <input type="submit" value="Добавить к заказу">
+</form>
+<script>
+  (function () {
+    var leadId = 0;
+    try {
+      leadId = window.location.search.split("leadId=")[1].split("&")[0];
+    } catch (e) {
+    }
+    var input = document.querySelector("input[name='leadId']");
+    if (input) input.value = leadId;
+  })();
+</script>
+<!--<script src="forms.js"></script>-->
+</body>
+</html>
